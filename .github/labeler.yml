@@ -3,5 +3,5 @@ repo:
   - ./*
   
 # Add '@domain/core' label to any change within the 'core' package
-@ci:
+ci-team:
   - .github/workflows/*
