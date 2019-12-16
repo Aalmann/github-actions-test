@@ -14,9 +14,11 @@ jobs:
     - name: Get the tag name
       id: get_tag_name
       run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+      shell: bash
     - name: Get the branch name
       id: get_branch_name
       run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF/refs\/heads\//}
+      shell: bash
     - name: print versions
       run: |
         echo Tag is ${{ steps.get_tag_name.outputs.TAG_NAME }}
