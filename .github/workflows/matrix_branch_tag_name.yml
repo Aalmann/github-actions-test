@@ -11,13 +11,13 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Get the tag version
-      id: get_tag_version
+    - name: Get the tag name
+      id: get_tag_name
       run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
     - name: Get the branch name
-      id: get_name_version
+      id: get_branch_name
       run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF/refs\/heads\//}
     - name: print versions
       run: |
-        echo Tag is ${{ steps.get_version.outputs.TAG_NAME }}
-        echo Branch is ${{ steps.get_version.outputs.BRANCH_NAME }}
+        echo Tag is ${{ steps.get_tag_name.outputs.TAG_NAME }}
+        echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
