@@ -33,15 +33,15 @@ jobs:
         mv test ${package_name}
         tar -cvzf ${package_name}.tgz ./${package_name}
         ls -la
-    - name: Create Release package Linux
+    - name: Create Release package Windows
       if: matrix.os == 'windows-latest'
       env:
         package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: |
         mkdir test
         echo bla > test\file.txt
-        Rename-Item test %package_name%
-        7z a -tzip %package_name%.zip %package_name%
+        Rename-Item test ${env:package_name}
+        7z a -tzip ${env:package_name}.zip ${env:package_name}
         dir
 
         
