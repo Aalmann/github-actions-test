@@ -24,7 +24,7 @@ jobs:
         echo Tag is ${{ steps.get_tag_name.outputs.TAG_NAME }}
         echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
     - name: Create Release package Linux
-      if: matrix.os == "ubuntu-latest"
+      if: matrix.os == 'ubuntu-latest'
       env:
         package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: |
@@ -33,7 +33,7 @@ jobs:
         mv test ${package_name}
         tar -cvzf ${package_name}.tgz ./${package_name}
     - name: Create Release package Linux
-      if: matrix.os == "windows-latest"
+      if: matrix.os == 'windows-latest'
       env:
         package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
       run: |
