@@ -10,6 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ['windows-latest', 'windows-2016', 'ubuntu-latest']
         include:
           - os: windows-latest
             cmake_generator: 'Visual Studio 16 2019'
