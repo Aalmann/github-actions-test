@@ -18,18 +18,14 @@ jobs:
       id: get_tag_name
       run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
       shell: bash
-    - name: Get the branch name
-      id: get_branch_name
-      run: echo ::set-output name=BRANCH_NAME::${GITHUB_REF/refs\/heads\//}
-      shell: bash
     - name: print versions
       run: |
         echo Tag is ${{ steps.get_tag_name.outputs.TAG_NAME }}
-        echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+#        echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
     - name: Create Release package Linux
       if: matrix.os == 'ubuntu-latest'
       env:
-        package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+        package_name: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
         mkdir test
         echo bla > test/file.txt
@@ -39,7 +35,7 @@ jobs:
     - name: Create Release package Windows
       if: matrix.os == 'windows-latest'
       env:
-        package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+        package_name: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
         mkdir test
         echo bla > test\file.txt
@@ -51,8 +47,8 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}.tgz
-        asset_name: my_name-linux-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+        file: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}.tgz
+        asset_name: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
     - name: Upload binaries to release Windows
@@ -60,7 +56,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}.zip
-        asset_name: my_name-windows-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
+        file: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}.zip
+        asset_name: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
