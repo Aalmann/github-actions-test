@@ -46,7 +46,7 @@ jobs:
         Rename-Item test ${env:package_name}
         7z a -tzip ${env:package_name}.zip ${env:package_name}
         dir
-    - name Upload binaries to release Linux
+    - name: Upload binaries to release Linux
       if: matrix.os == 'ubuntu-latest'
       uses: svenstaro/upload-release-action@v1-release
       with:
@@ -55,7 +55,7 @@ jobs:
         asset_name: my_name-linux-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
-    - name Upload binaries to release Windows
+    - name: Upload binaries to release Windows
       if: matrix.os == 'windows-latest'
       uses: svenstaro/upload-release-action@v1-release
       with:
