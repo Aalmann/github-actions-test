@@ -25,7 +25,7 @@ jobs:
     - name: Create Release package Linux
       if: matrix.os == 'ubuntu-latest'
       env:
-        package_name: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        package_name: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
         mkdir test
         echo bla > test/file.txt
@@ -35,7 +35,7 @@ jobs:
     - name: Create Release package Windows
       if: matrix.os == 'windows-latest'
       env:
-        package_name: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        package_name: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
         mkdir test
         echo bla > test\file.txt
@@ -47,7 +47,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}.tgz
+        file: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}.tgz
         asset_name: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
@@ -56,7 +56,7 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-${{ steps.get_tag_name.outputs.TAG_NAME }}.zip
+        file: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}.zip
         asset_name: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
