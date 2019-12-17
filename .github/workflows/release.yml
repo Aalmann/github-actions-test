@@ -39,8 +39,8 @@ jobs:
       run: |
         mkdir test
         echo bla > test\file.txt
-        Rename-Item test ${env:package_name}
-        7z a -tzip ${env:package_name}.zip ${env:package_name}
+        Rename-Item test "${env:package_name}"
+        7z a -tzip "${env:package_name}.zip" "${env:package_name}"
         dir
     - name: Upload binaries to release Linux
       if: matrix.os == 'ubuntu-latest'
