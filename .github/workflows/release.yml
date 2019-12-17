@@ -10,7 +10,34 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            cmake_generator: 'Visual Studio 16 2019'
+            arch_key: '-A'
+            arch_value: 'x64'
+            toolset_key: '-T'
+            toolset_value: 'v141'
+            compress_cmd: '7z a -tzip "${env:package_name}.zip" "${env:package_name}"'
+            compressed_suffix: 'zip'
+            list_dir_cmd: 'dir'
+          - os: windows-2016
+            cmake_generator: 'Visual Studio 15 2017'
+            arch_key: '-A'
+            arch_value: 'x64'
+            toolset_key: '-T'
+            toolset_value: 'v140'
+            compress_cmd: '7z a -tzip "${env:package_name}.zip" "${env:package_name}"'
+            compressed_suffix: 'zip'
+            list_dir_cmd: 'dir'
+          - os: ubuntu-latest
+            cmake_generator: 'Unix Makefiles'
+            arch_key: ''
+            arch_value: ''
+            toolset_key: ''
+            toolset_value: ''
+            compress_cmd: 'tar -cvzf ${package_name}.tgz ./${package_name}'
+            compressed_suffix: 'zip'
+            list_dir_cmd: 'ls -la'
     
     steps:
     - uses: actions/checkout@v1
@@ -22,41 +49,20 @@ jobs:
       run: |
         echo Tag is ${{ steps.get_tag_name.outputs.TAG_NAME }}
 #        echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
-    - name: Create Release package Linux
-      if: matrix.os == 'ubuntu-latest'
+    - name: Create Release package
       env:
-        package_name: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        package_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
-        mkdir test
+        mkdir my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
         echo bla > test/file.txt
-        mv test ${package_name}
-        tar -cvzf ${package_name}.tgz ./${package_name}
-        ls -la
-    - name: Create Release package Windows
-      if: matrix.os == 'windows-latest'
-      env:
-        package_name: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}
-      run: |
-        mkdir test
-        echo bla > test\file.txt
-        Rename-Item test "${env:package_name}"
-        7z a -tzip "${env:package_name}.zip" "${env:package_name}"
-        dir
-    - name: Upload binaries to release Linux
-      if: matrix.os == 'ubuntu-latest'
+        ${{ matrix.compress_cmd }}
+        ${{ matrix.list_dir_cmd }}
+    - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}.tgz
-        asset_name: my_name-linux-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        file: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}.${{ martix.compressed_suffix }}
+        asset_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
-    - name: Upload binaries to release Windows
-      if: matrix.os == 'windows-latest'
-      uses: svenstaro/upload-release-action@v1-release
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}.zip
-        asset_name: my_name-windows-${{ steps.get_tag_name.outputs.TAG_NAME }}
-        tag: ${{ github.ref }}
-        overwrite: true
+
