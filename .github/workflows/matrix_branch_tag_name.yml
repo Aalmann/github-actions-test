@@ -1,6 +1,9 @@
 name: test getting the version
 
-on: [push]
+on: 
+  push:
+    branches:
+        - '**'
 
 jobs:
   build:
