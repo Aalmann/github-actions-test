@@ -55,7 +55,7 @@ jobs:
         package_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
         mkdir my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
-        echo bla > test/file.txt
+        echo test >  my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}/file.txt
         ${{ matrix.compress_cmd }}
         ${{ matrix.list_dir_cmd }}
     - name: Upload binaries to release
