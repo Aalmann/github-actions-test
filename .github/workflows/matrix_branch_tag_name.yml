@@ -25,22 +25,22 @@ jobs:
         echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
     - name: Create Release package Linux
       if: matrix.os == "ubuntu-latest"
-      with:
+      env:
         package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
-        run: |
-          mkdir test
-          echo bla > test/file.txt
-          mv test ${{ package_name }}
-          tar -cvzf ${{ package_name }}.tgz ./${{ package_name }}
+      run: |
+        mkdir test
+        echo bla > test/file.txt
+        mv test ${package_name}
+        tar -cvzf ${package_name}.tgz ./${package_name}
     - name: Create Release package Linux
       if: matrix.os == "windows-latest"
-      with:
+      env:
         package_name: my_name-${{ steps.get_branch_name.outputs.BRANCH_NAME }}
-        run: |
-          mkdir test
-          echo bla > test\file.txt
-          move /Y test ${{ package_name }}
-          7za a -tzip ${{ package_name }}.zip ${{ package_name }}
+      run: |
+        mkdir test
+        echo bla > test\file.txt
+        move /Y test %package_name%
+        7za a -tzip %package_name%.zip %package_name%
 
         
 
