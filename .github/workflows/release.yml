@@ -37,7 +37,7 @@ jobs:
             toolset_key: ''
             toolset_value: ''
             compress_cmd: 'tar -cvzf ${package_name}.tgz ./${package_name}'
-            compressed_suffix: 'zip'
+            compressed_suffix: 'tgz'
             list_dir_cmd: 'ls -la'
     
     steps:
