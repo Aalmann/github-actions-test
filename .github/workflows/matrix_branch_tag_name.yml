@@ -39,7 +39,7 @@ jobs:
       run: |
         mkdir test
         echo bla > test\file.txt
-        move /Y test %package_name%
+        Rename-Item test %package_name%
         7za a -tzip %package_name%.zip %package_name%
 
         
