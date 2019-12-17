@@ -1,4 +1,4 @@
-name: test getting the version
+name: test getting the version from tag
 
 on: 
   push:
