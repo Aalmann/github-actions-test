@@ -32,6 +32,7 @@ jobs:
         echo bla > test/file.txt
         mv test ${package_name}
         tar -cvzf ${package_name}.tgz ./${package_name}
+        ls -la
     - name: Create Release package Linux
       if: matrix.os == 'windows-latest'
       env:
@@ -41,6 +42,7 @@ jobs:
         echo bla > test\file.txt
         Rename-Item test %package_name%
         7z a -tzip %package_name%.zip %package_name%
+        dir
 
         
 
