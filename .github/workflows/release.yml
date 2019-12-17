@@ -51,9 +51,9 @@ jobs:
 #        echo Branch is ${{ steps.get_branch_name.outputs.BRANCH_NAME }}
     - name: Create Release package
       env:
-        package_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        package_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
       run: |
-        mkdir my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        mkdir my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
         echo bla > test/file.txt
         ${{ matrix.compress_cmd }}
         ${{ matrix.list_dir_cmd }}
@@ -61,8 +61,8 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}.${{ martix.compressed_suffix }}
-        asset_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ martix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
+        file: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}.${{ matrix.compressed_suffix }}
+        asset_name: my_name-${{ matrix.os }}-${{ matrix.arch_value }}-${{ matrix.toolset_value }}-${{ steps.get_tag_name.outputs.TAG_NAME }}
         tag: ${{ github.ref }}
         overwrite: true
 
