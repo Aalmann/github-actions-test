@@ -11,10 +11,12 @@ jobs:
 
     steps:
     - uses: actions/stale@v1
+      id: stale_action
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: 'Stale issue message'
         stale-pr-message: 'Stale pull request message'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
-        run: echo ${{ repo-token }} and ${{ stale-issue-message }} and ${{ stale-pr-message }} and ${{ stale-issue-label }} and ${{ stale-pr-label }} 
+    - name: Check stale
+      run: echo ${{ setps.stale_action.output.repo-token }} and ${{ setps.stale_action.output.stale-issue-message }} and ${{ setps.stale_action.output.stale-pr-message }} and ${{ setps.stale_action.output.stale-issue-label }} and ${{ setps.stale_action.output.stale-pr-label }} 
