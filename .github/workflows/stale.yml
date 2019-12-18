@@ -19,4 +19,4 @@ jobs:
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
     - name: Check stale
-      run: echo ${{ setps.stale_action.output.repo-token }} and ${{ setps.stale_action.output.stale-issue-message }} and ${{ setps.stale_action.output.stale-pr-message }} and ${{ setps.stale_action.output.stale-issue-label }} and ${{ setps.stale_action.output.stale-pr-label }} 
+      run: echo ${{ steps.stale_action.output.repo-token }} and ${{ steps.stale_action.output.stale-issue-message }} and ${{ steps.stale_action.output.stale-pr-message }} and ${{ steps.stale_action.output.stale-issue-label }} and ${{ steps.stale_action.output.stale-pr-label }} 
