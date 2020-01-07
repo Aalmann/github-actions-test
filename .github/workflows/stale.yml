@@ -18,5 +18,6 @@ jobs:
         stale-pr-message: 'Stale pull request message'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
-    - name: Check stale
-      run: echo ${{ steps.stale_action.output.repo-token }} and ${{ steps.stale_action.output.stale-issue-message }} and ${{ steps.stale_action.output.stale-pr-message }} and ${{ steps.stale_action.output.stale-issue-label }} and ${{ steps.stale_action.output.stale-pr-label }} 
+        days-before-stale: 5
+        days-before-close: 1
+    
